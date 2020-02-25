@@ -49,7 +49,7 @@ var ExternalUnityPackages = new [] {
 
 // UWP IL2CPP dependencies.
 var UwpIL2CPPDependencies = new [] {
-    new NugetDependency("sqlite-net-pcl", "1.3.1", "UAP, Version=v10.0")
+    new NugetDependency("SQLitePCLRaw.bundle_green", "2.0.2", "UAP, Version=v10.0")
 };
 var UwpIL2CPPJsonUrl = SdkStorageUrl + "Newtonsoft.Json.dll";
 
@@ -87,7 +87,7 @@ class AppCenterModule
         UWPHasNativeCode = hasNative;
         if (hasNative)
         {
-            NativeArchitectures = new string[] {"x86", "x64", "arm"};
+            NativeArchitectures = new string[] {"x86", "x64", "arm", "arm64"};
         }
     }
 }
@@ -149,7 +149,7 @@ class UnityPackage
         if (needsCore)
         {
             var specFileDirectory = System.IO.Path.GetDirectoryName(specFilePath);
-            if (!AddFilesFromSpec(specFileDirectory + "/AppCenter.unitypackagespec")) 
+            if (!AddFilesFromSpec(specFileDirectory + "/AppCenter.unitypackagespec"))
             {
                 return false;
             }
@@ -295,7 +295,7 @@ Task("BuildAndroidContentProvider").Does(()=>
 
     // This is a workaround for NDK build making an error where it claims
     // it can't find the built .so library (which is built successfully).
-    // This error is breaking the CI build on Windows. If you are seeing this, 
+    // This error is breaking the CI build on Windows. If you are seeing this,
     // most likely we haven't found a fix and this is an NDK bug.
     if (!IsRunningOnWindows())
     {
@@ -305,7 +305,7 @@ Task("BuildAndroidContentProvider").Does(()=>
         // The build fails with an error that libPuppetBreakpad.so is not found but it's generated properly.
         // Might be related to the fact the the path to generate the library is relative, in any case it's a false negative.
         Warning ("Ignoring BreakpadSupport build failure... It's ok. Unity complains that the .so is not found which is not true. It's a false negative.");
-        if (!FileExists("AppCenterDemoApp/Assets/Plugins/Android/libPuppetBreakpad.so")) 
+        if (!FileExists("AppCenterDemoApp/Assets/Plugins/Android/libPuppetBreakpad.so"))
         {
             throw new Exception("Building breakpad library failed.");
         }
