@@ -30,7 +30,7 @@ static int ExecuteUnityCommand(string extraArgs, string projectPath = ".")
             unityPath = "C:\\Program Files\\Unity\\Editor\\Unity.exe";
         }
     }
-    if (!System.IO.File.Exists(unityPath)) 
+    if (!System.IO.File.Exists(unityPath))
     {
         throw new Exception("Unity installation does not exist under " + unityPath);
     }
@@ -66,7 +66,7 @@ static int ExecuteUnityCommand(string extraArgs, string projectPath = ".")
         {
             unityProcess.WaitForExit();
             result = unityProcess.GetExitCode();
-            if (logProcess.WaitForExit(0) && (logProcess.GetExitCode() != 0))
+            if (logProcess.WaitForExit(1000) && (logProcess.GetExitCode() != 0))
             {
                 Statics.Context.Warning("There was an error logging, but command still executed.");
             }
@@ -96,7 +96,7 @@ static string GetBuildFolder(string appType, string projectPath)
 static void ExecuteUnityMethod(string buildMethodName, string buildTarget = null, string projectPath = ".")
 {
     Statics.Context.Information("Executing method " + buildMethodName + ", this could take a while...");
-    var command = "-executeMethod " + buildMethodName; 
+    var command = "-executeMethod " + buildMethodName;
     if (buildTarget != null)
     {
         command += " -buildTarget " + buildTarget;
