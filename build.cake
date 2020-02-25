@@ -799,7 +799,9 @@ string GetNuGetPackage(string packageId, string packageVersion)
 void ExtractNuGetPackage (IPackage package, FrameworkName frameworkName, string tempContentPath, string destination) {
     if (package != null) {
         IEnumerable<IPackageAssemblyReference> assemblies;
-        VersionUtility.TryGetCompatibleItems (frameworkName, package.AssemblyReferences, out assemblies);
+        if (!VersionUtility.TryGetCompatibleItems (frameworkName, package.AssemblyReferences, out assemblies)) {
+            VersionUtility.TryGetCompatibleItems (new FrameworkName(".NETStandard, Version=2.0"), package.AssemblyReferences, out assemblies);
+        }
 
         // Move assemblies.
         foreach (var i in assemblies) {
