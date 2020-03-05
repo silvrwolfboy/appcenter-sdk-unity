@@ -15,7 +15,6 @@ using UnityEngine;
 public class FirebaseDependency
 {
     public static string AndroidSdkRoot {
-            get { return EditorPrefs.GetString("AndroidSdkRoot"); }
             get {
                 var sdkPath = EditorPrefs.GetString("AndroidSdkRoot");
                 // Unity 2019.x added installation of the Android SDK in the AndroidPlayer directory
