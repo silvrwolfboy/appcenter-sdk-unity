@@ -14,36 +14,6 @@ using UnityEngine;
 /// </summary>
 public class FirebaseDependency
 {
-    /// <summary>
-        /// Get the Android playback engine directory.
-        /// </summary>
-        /// <returns>Get the playback engine directory.</returns>
-        public static string AndroidPlaybackEngineDirectory {
-            get {
-                try {
-                    return (string)VersionHandler.InvokeStaticMethod(
-                        typeof(BuildPipeline), "GetPlaybackEngineDirectory",
-                        new object[] { BuildTarget.Android, BuildOptions.None });
-                } catch (Exception) {
-                    return null;
-                }
-            }
-        }
-    public static string AndroidSdkRoot {
-            get {
-                var sdkPath = EditorPrefs.GetString("AndroidSdkRoot");
-                // Unity 2019.x added installation of the Android SDK in the AndroidPlayer directory
-                // so fallback to searching for it there.
-                if (String.IsNullOrEmpty(sdkPath) || EditorPrefs.GetBool("SdkUseEmbedded")) {
-                    var androidPlayerDir = AndroidPlaybackEngineDirectory;
-                    if (!String.IsNullOrEmpty(androidPlayerDir)) {
-                        var androidPlayerSdkDir = Path.Combine(androidPlayerDir, "SDK");
-                        if (Directory.Exists(androidPlayerSdkDir)) sdkPath = androidPlayerSdkDir;
-                    }
-                }
-                return sdkPath;
-            }
-        }
 
     private const string GoogleServicesFileBasename = "google-services";
     private const string GoogleServicesInputFile = GoogleServicesFileBasename + ".json";
@@ -85,7 +55,7 @@ public class FirebaseDependency
         }
         object svcSupport = versionHandler.InvokeMember("InvokeStaticMethod", BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod, null, null, new object[]
         {
-            playServicesSupport, "CreateInstance", new object[] { "FirebaseMessaging", FirebaseDependency.AndroidSdkRoot, "ProjectSettings" }, null
+            playServicesSupport, "CreateInstance", new object[] { "FirebaseMessaging", Environment.GetEnvironmentVariable("ANDROID_SDK_HOME"), "ProjectSettings" }, null
         });
         versionHandler.InvokeMember("InvokeInstanceMethod", BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod, null, null, new object[]
         {
