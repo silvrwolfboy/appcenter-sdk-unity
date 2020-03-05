@@ -14,6 +14,23 @@ using UnityEngine;
 /// </summary>
 public class FirebaseDependency
 {
+    public static string AndroidSdkRoot {
+            get { return EditorPrefs.GetString("AndroidSdkRoot"); }
+            get {
+                var sdkPath = EditorPrefs.GetString("AndroidSdkRoot");
+                // Unity 2019.x added installation of the Android SDK in the AndroidPlayer directory
+                // so fallback to searching for it there.
+                if (String.IsNullOrEmpty(sdkPath) || EditorPrefs.GetBool("SdkUseEmbedded")) {
+                    var androidPlayerDir = AndroidPlaybackEngineDirectory;
+                    if (!String.IsNullOrEmpty(androidPlayerDir)) {
+                        var androidPlayerSdkDir = Path.Combine(androidPlayerDir, "SDK");
+                        if (Directory.Exists(androidPlayerSdkDir)) sdkPath = androidPlayerSdkDir;
+                    }
+                }
+                return sdkPath;
+            }
+        }
+
     private const string GoogleServicesFileBasename = "google-services";
     private const string GoogleServicesInputFile = GoogleServicesFileBasename + ".json";
     private const string GoogleServicesOutputFile = GoogleServicesFileBasename + ".xml";
@@ -54,7 +71,7 @@ public class FirebaseDependency
         }
         object svcSupport = versionHandler.InvokeMember("InvokeStaticMethod", BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod, null, null, new object[]
         {
-            playServicesSupport, "CreateInstance", new object[] { "FirebaseMessaging", EditorPrefs.GetString("AndroidSdkRoot"), "ProjectSettings" }, null
+            playServicesSupport, "CreateInstance", new object[] { "FirebaseMessaging", FirebaseDependency.AndroidSdkRoot, "ProjectSettings" }, null
         });
         versionHandler.InvokeMember("InvokeInstanceMethod", BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod, null, null, new object[]
         {
