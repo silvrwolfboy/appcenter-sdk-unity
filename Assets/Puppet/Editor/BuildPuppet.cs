@@ -109,6 +109,7 @@ public class BuildPuppet
 
     private static void BuildPuppetScene(BuildTarget target, BuildTargetGroup targetGroup, ScriptingImplementation scriptingImplementation, string outputPath)
     {
+        EditorPrefs.SetString("AndroidSdkRoot", Environment.GetEnvironmentVariable("ANDROID_HOME"));
         PlayerSettings.SetScriptingBackend(targetGroup, scriptingImplementation);
         string[] puppetScene = { AssetsFolder + "/Puppet/PuppetScene.unity" };
         var options = new BuildPlayerOptions
