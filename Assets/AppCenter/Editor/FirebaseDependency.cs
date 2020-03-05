@@ -14,6 +14,21 @@ using UnityEngine;
 /// </summary>
 public class FirebaseDependency
 {
+    /// <summary>
+        /// Get the Android playback engine directory.
+        /// </summary>
+        /// <returns>Get the playback engine directory.</returns>
+        public static string AndroidPlaybackEngineDirectory {
+            get {
+                try {
+                    return (string)VersionHandler.InvokeStaticMethod(
+                        typeof(BuildPipeline), "GetPlaybackEngineDirectory",
+                        new object[] { BuildTarget.Android, BuildOptions.None });
+                } catch (Exception) {
+                    return null;
+                }
+            }
+        }
     public static string AndroidSdkRoot {
             get {
                 var sdkPath = EditorPrefs.GetString("AndroidSdkRoot");
