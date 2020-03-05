@@ -511,6 +511,7 @@ Task("CreatePackages").IsDependentOn("PrepareAssets").IsDependentOn("Package");
 // Builds the puppet applications and throws an exception on failure.
 Task("BuildPuppetApps")
     .IsDependentOn("PrepareAssets")
+    .IsDependentOn("DownloadNdk")
     .Does(()=>
 {
     BuildApps("Puppet");
