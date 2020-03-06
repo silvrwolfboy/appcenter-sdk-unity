@@ -32,7 +32,7 @@ public class BuildPuppet
 
     public static void BuildPuppetSceneAndroidIl2CPP()
     {
-        CreateGoogleServicesJsonIfNotPresent();
+       // CreateGoogleServicesJsonIfNotPresent();
         // Set NDK location if provided
         var args = Environment.GetCommandLineArgs();
         bool next = false;
@@ -54,6 +54,7 @@ public class BuildPuppet
         }
         EditorPrefs.SetString("AndroidSdkRoot", Environment.GetEnvironmentVariable("ANDROID_HOME"));
         Debug.Log("Setting sdk root to " + Environment.GetEnvironmentVariable("ANDROID_HOME"));
+        EditorPrefs.GetBool("SdkUseEmbedded");
         BuildPuppetScene(BuildTarget.Android, BuildTargetGroup.Android, ScriptingImplementation.IL2CPP, "AndroidIL2CPPBuild.apk");
     }
 
