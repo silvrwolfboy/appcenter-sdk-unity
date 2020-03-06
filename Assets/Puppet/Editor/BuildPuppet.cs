@@ -54,9 +54,8 @@ public class BuildPuppet
         }
         EditorPrefs.SetString("AndroidSdkRoot", Environment.GetEnvironmentVariable("ANDROID_HOME"));
         Debug.Log("Setting sdk root to " + Environment.GetEnvironmentVariable("ANDROID_HOME"));
-        PlayerSettings.Android.targetSdkVersion = AndroidSdkVersions.AndroidApiLevel28;
-        PlayerSettings.Android.minSdkVersion = AndroidSdkVersions.AndroidApiLevel28;
-        EditorUserBuildSettings.androidUseLegacySdkTools = true;
+        PlayerSettings.Android.targetSdkVersion = AndroidSdkVersions.AndroidApiLevel27;
+        PlayerSettings.Android.minSdkVersion = AndroidSdkVersions.AndroidApiLevel16;
         BuildPuppetScene(BuildTarget.Android, BuildTargetGroup.Android, ScriptingImplementation.IL2CPP, "AndroidIL2CPPBuild.apk");
     }
 
