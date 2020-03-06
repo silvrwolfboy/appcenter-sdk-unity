@@ -54,7 +54,7 @@ public class BuildPuppet
         }
         EditorPrefs.SetString("AndroidSdkRoot", Environment.GetEnvironmentVariable("ANDROID_HOME"));
         Debug.Log("Setting sdk root to " + Environment.GetEnvironmentVariable("ANDROID_HOME"));
-        EditorPrefs.GetBool("SdkUseEmbedded");
+        
         BuildPuppetScene(BuildTarget.Android, BuildTargetGroup.Android, ScriptingImplementation.IL2CPP, "AndroidIL2CPPBuild.apk");
     }
 
