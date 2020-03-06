@@ -538,11 +538,11 @@ Task("DownloadNdk")
     // Download required NDK
     DownloadFile(ndkUrl, zipDestination);
 
-    NdkFolder = EnvironmentVariable("ANDROID_HOME");
+    NdkFolder = EnvironmentVariable("ANDROID_HOME") + "ndk-bundle";
     // Something is buggy about the way Cake unzips, so use shell on mac
     if (IsRunningOnUnix())
     {
-        CleanDirectory(NdkFolder + "/android-ndk-r15c");
+        CleanDirectory(NdkFolder);
         var result = StartProcess("unzip", new ProcessSettings{ Arguments = $"{zipDestination} -d {NdkFolder}"});
         if (result != 0)
         {
