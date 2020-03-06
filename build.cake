@@ -553,7 +553,7 @@ Task("DownloadNdk")
     {
         Unzip(zipDestination, NdkFolder);
     }
-    CleanDirectory(NdkFolder + "/ndk-bundle");
+    DeleteDirectory(NdkFolder + "/ndk-bundle");
     MoveDirectory (NdkFolder + "/android-ndk-r16b", NdkFolder + "/ndk-bundle");
 }).OnError(HandleError);
 
