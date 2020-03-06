@@ -511,7 +511,6 @@ Task("CreatePackages").IsDependentOn("PrepareAssets").IsDependentOn("Package");
 // Builds the puppet applications and throws an exception on failure.
 Task("BuildPuppetApps")
     .IsDependentOn("PrepareAssets")
-    .IsDependentOn("DownloadNdk")
     .Does(()=>
 {
     BuildApps("Puppet");
@@ -633,7 +632,7 @@ void VerifyAndroidAppsBuild(string type, string projectPath)
         extraArgs += "-NdkLocation \"" + absoluteNdkFolder + "\"";
     }
     VerifyAppsBuild(type, "android", projectPath,
-    new string[] { "AndroidMono", "AndroidIl2CPP" },
+    new string[] { /*"AndroidMono", */"AndroidIl2CPP" },
     outputDirectory =>
     {
         // Verify that an APK was generated.
