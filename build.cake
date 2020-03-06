@@ -538,7 +538,7 @@ Task("DownloadNdk")
     // Download required NDK
     DownloadFile(ndkUrl, zipDestination);
 
-    NdkFolder = EnvironmentVariable("ANDROID_HOME") + "/ndk-bundle";
+    NdkFolder = EnvironmentVariable("ANDROID_HOME");
     // Something is buggy about the way Cake unzips, so use shell on mac
     if (IsRunningOnUnix())
     {
@@ -554,8 +554,8 @@ Task("DownloadNdk")
         Unzip(zipDestination, NdkFolder);
     }
     var files = GetFiles (NdkFolder + "/android-ndk-r16b");
-    MoveFiles (files, NdkFolder);
-    CleanDirectory(NdkFolder + "/android-ndk-r16b");
+    CleanDirectory(NdkFolder + "/ndk-bundle");
+    MoveDirectory (NdkFolder + "/android-ndk-r16b", NdkFolder + "/ndk-bundle");
 }).OnError(HandleError);
 
 void GetUwpPackage (AppCenterModule module, bool usePublicFeed) {
