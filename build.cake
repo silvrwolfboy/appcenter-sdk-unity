@@ -553,9 +553,9 @@ Task("DownloadNdk")
     {
         Unzip(zipDestination, NdkFolder);
     }
-    var files = GetFiles (NdkFolder + "/android-ndk-r16c");
+    var files = GetFiles (NdkFolder + "/android-ndk-r16b");
     MoveFiles (files, NdkFolder);
-    CleanDirectory(NdkFolder + "/android-ndk-r16c");
+    CleanDirectory(NdkFolder + "/android-ndk-r16b");
 }).OnError(HandleError);
 
 void GetUwpPackage (AppCenterModule module, bool usePublicFeed) {
